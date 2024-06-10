@@ -28,13 +28,6 @@
     <script>
         let lines = [];
 
-        // Fetch the text file
-        fetch('dp.txt')
-            .then(response => response.text())
-            .then(text => {
-                lines = text.split('\n').filter(line => line.trim() !== '');
-            });
-
         function displayRandomLine() {
             if (lines.length > 0) {
                 const randomIndex = Math.floor(Math.random() * lines.length);
@@ -42,11 +35,18 @@
             }
         }
 
-        // Display a random line on startup
-        displayRandomLine();
+        // Fetch the text file and display a random line once the lines are loaded
+        fetch('dp.txt')
+            .then(response => response.text())
+            .then(text => {
+                lines = text.split('\n').filter(line => line.trim() !== '');
+                displayRandomLine(); // Call the function after the lines are populated
+            });
 
-        // Change the line each time a key is pressed
+        // Change the line each time a key is pressed or screen is touched/clicked
         document.addEventListener('keydown', displayRandomLine);
+        document.addEventListener('touchstart', displayRandomLine);
+        document.addEventListener('click', displayRandomLine);
     </script>
 </body>
 </html>
