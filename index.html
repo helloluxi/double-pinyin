@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Pinyin</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Aligns items to the top */
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #line {
+            font-size: 10em; /* Large font size for 4 characters */
+            text-align: center;
+            margin-top: 20vh; /* Adjust the margin to position the text vertically */
+        }
+    </style>
+</head>
+<body>
+    <div id="line"></div>
+
+    <script>
+        let lines = [];
+
+        // Fetch the text file
+        fetch('dp.txt')
+            .then(response => response.text())
+            .then(text => {
+                lines = text.split('\n').filter(line => line.trim() !== '');
+            });
+
+        function displayRandomLine() {
+            if (lines.length > 0) {
+                const randomIndex = Math.floor(Math.random() * lines.length);
+                document.getElementById('line').textContent = lines[randomIndex];
+            }
+        }
+
+        // Display a random line on startup
+        displayRandomLine();
+
+        // Change the line each time a key is pressed
+        document.addEventListener('keydown', displayRandomLine);
+    </script>
+</body>
+</html>
